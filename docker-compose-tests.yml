@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  web:
+    build: .
+    environment:
+      - DJANGO_ENV=tests
+
+

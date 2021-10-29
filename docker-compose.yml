@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  web:
+    build: .
+    environment:
+      - DJANGO_ENV=production
+    volumes:
+      - static_volume:/opt/project/static
+      - media_volume:/opt/project/media
+    networks:
+      - nginx_network
+  
+
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8001:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static_volume:/project/static
+      - media_volume:/project/media
+    depends_on:  
+      - web
+    networks:
+      - nginx_network
+  
+
+networks:
+  nginx_network:
+    driver: bridge
+
+
+
+volumes:
+  static_volume:
+  media_volume:
